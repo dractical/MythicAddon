@@ -88,5 +88,11 @@
           <version>5.1.0</version>
           <scope>provided</scope>
       </dependency>
+      <dependency>
+          <groupId>com.ticxo.modelengine</groupId>
+          <artifactId>ModelEngine</artifactId>
+          <version>R4.0.3</version>
+          <scope>provided</scope>
+      </dependency>
   </dependencies>
 </project>
