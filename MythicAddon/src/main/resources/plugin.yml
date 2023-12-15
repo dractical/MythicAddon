@@ -1,0 +1,15 @@
+name: MythicAddon
+version: '${project.version}'
+main: org.aidan.mythicaddon.MythicAddon
+api-version: '1.19'
+commands:
+  mythicaddon:
+    description: Reloads the MythicAddon configuration
+    usage: /<command> reload
+depend:
+  - MythicMobs
+  - ProtocolLib
+permissions:
+  mythicaddon.reload:
+    description: Allows the user to reload the MythicAddon configuration
+    default: op
