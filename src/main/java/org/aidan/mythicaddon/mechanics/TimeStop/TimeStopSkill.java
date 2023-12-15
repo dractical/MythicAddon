@@ -29,8 +29,6 @@ public class TimeStopSkill implements INoTargetSkill {
         try {
             // Pass new attributes to the TimeStopAbility instance
             timeStopAbility.startFreezingProjectiles(spawnProjectile, restoreVelocity);
-            plugin.getLogger().info("[TimeStopSkill] Time Stop activated with spawnProjectile: "
-                    + spawnProjectile + ", restoreVelocity: " + restoreVelocity);
             Bukkit.getScheduler().runTaskLater(plugin,
                     () -> timeStopAbility.resumeProjectiles(restoreVelocity), duration);
             return SkillResult.SUCCESS;
