@@ -34,7 +34,7 @@ public class StatSkill implements ITargetedEntitySkill {
         }
         this.modifierType = modifierType1;
         this.value = config.getDouble("value");
-        this.duration = config.getLong(new String[] { "duration" }, Double.MAX_VALUE);
+        this.duration = config.getLong(new String[] { "duration" }, Long.MAX_VALUE);
     }
 
     @Override
