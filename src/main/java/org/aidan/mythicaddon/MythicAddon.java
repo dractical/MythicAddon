@@ -67,7 +67,7 @@ public class MythicAddon extends JavaPlugin implements Listener {
             log.info("-- Registered dropitemslot mechanic!"); // Logs mechanic registration
         } else if (event.getMechanicName().equalsIgnoreCase("statskill")) {
             event.register(new StatSkill(this, event.getConfig())); // Registers StatSkill
-            log.info("-- Registered dropitemslot mechanic!"); // Logs mechanic registration
+            log.info("-- Registered statskill mechanic!"); // Logs mechanic registration
         }
     }
 
