@@ -29,12 +29,12 @@ public class StatSkill implements ITargetedEntitySkill {
         try {
             modifierType1 = ModifierType.valueOf(config.getString("modifierType"));
         } catch(IllegalArgumentException error) {
-            System.out.println("The Modifier type of BuffSkill doesn't fit the name pattern (FLAT or RELATIVE). ModifierType set to FLAT.");
+            System.out.println("The Modifier type of StatSkill doesn't fit the name pattern (FLAT or RELATIVE). ModifierType set to FLAT.");
             modifierType1 = ModifierType.FLAT;
         }
         this.modifierType = modifierType1;
         this.value = config.getDouble("value");
-        this.duration = config.getLong(new String[] { "duration" }, 100);
+        this.duration = config.getLong(new String[] { "duration" }, Double.MAX_VALUE);
     }
 
     @Override
