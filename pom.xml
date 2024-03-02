@@ -71,6 +71,10 @@
           <id>enginehub</id>
           <url>https://maven.enginehub.org/repo/</url>
       </repository>
+      <repository>
+          <id>phoenix</id>
+          <url>https://nexus.phoenixdevt.fr/repository/maven-public/</url>
+      </repository>
   </repositories>
 
   <dependencies>
@@ -84,6 +88,12 @@
           <groupId>io.lumine</groupId>
           <artifactId>Mythic-Dist</artifactId>
           <version>5.5.1-SNAPSHOT</version>
+          <scope>provided</scope>
+      </dependency>
+      <dependency>
+          <groupId>io.lumine</groupId>
+          <artifactId>MythicLib-dist</artifactId>
+          <version>1.6.2-SNAPSHOT</version>
           <scope>provided</scope>
       </dependency>
       <dependency>

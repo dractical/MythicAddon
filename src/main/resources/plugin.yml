@@ -9,6 +9,7 @@ commands:
 depend:
   - MythicMobs
   - ProtocolLib
+  - MythicLib
 softdepend:
   - PlotSquared
 permissions:
