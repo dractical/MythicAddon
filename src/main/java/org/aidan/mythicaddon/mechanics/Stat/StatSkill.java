@@ -24,22 +24,26 @@ public class StatSkill implements ITargetedEntitySkill {
 
     public StatSkill(JavaPlugin plugin, MythicLineConfig config) {
         this.plugin = plugin;
-        this.statsType = config.getString("statsType");
+        this.statsType = config.getString("statsType", "MAX_HEALTH");
         ModifierType modifierType1;
         try {
             modifierType1 = ModifierType.valueOf(config.getString("modifierType"));
         } catch(IllegalArgumentException error) {
-            System.out.println("The Modifier type of StatSkill doesn't fit the name pattern (FLAT or RELATIVE). ModifierType set to FLAT.");
+            System.out.println("The modifier type of StatSkill doesn't fit the name pattern (FLAT or RELATIVE). ModifierType set to FLAT by default.");
             modifierType1 = ModifierType.FLAT;
         }
         this.modifierType = modifierType1;
-        this.value = config.getDouble("value");
-        this.duration = config.getLong(new String[] { "duration" }, Long.MAX_VALUE);
+        this.value = config.getDouble("value", 1.0d);
+        this.duration = config.getLong(new String[] { "duration" }, 100l);
     }
 
     @Override
     public SkillResult castAtEntity(SkillMetadata skillMetadata, AbstractEntity abstractEntity) {
         final MMOPlayerData targetMMOPlayerData = MMOPlayerData.get(abstractEntity.getUniqueId());
+        if (targetMMOPlayerData == null) {
+            return SkillResult.INVALID_TARGET;
+        }
+
         final String keyStats = UUID.randomUUID().toString();
         TemporaryStatModifier statModifier = new TemporaryStatModifier(keyStats, this.statsType, this.value, this.modifierType, EquipmentSlot.OTHER, ModifierSource.OTHER);
         statModifier.register(targetMMOPlayerData, this.duration);
