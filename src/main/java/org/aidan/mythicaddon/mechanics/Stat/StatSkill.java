@@ -39,6 +39,11 @@ public class StatSkill implements ITargetedEntitySkill {
 
     @Override
     public SkillResult castAtEntity(SkillMetadata skillMetadata, AbstractEntity abstractEntity) {
+        if (this.plugin.getServer().getPluginManager().getPlugin("MythicLib") == null) {
+            System.out.println("To use the StatSkill you need to have MythicLib installed.");
+            return SkillResult.MISSING_COMPATIBILITY;
+        }
+
         final MMOPlayerData targetMMOPlayerData = MMOPlayerData.get(abstractEntity.getUniqueId());
         if (targetMMOPlayerData == null) {
             return SkillResult.INVALID_TARGET;

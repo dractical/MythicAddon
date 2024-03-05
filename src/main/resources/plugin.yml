@@ -9,9 +9,9 @@ commands:
 depend:
   - MythicMobs
   - ProtocolLib
-  - MythicLib
 softdepend:
   - PlotSquared
+  - MythicLib
 permissions:
   mythicaddon.reload:
     description: Allows the user to reload the MythicAddon configuration
