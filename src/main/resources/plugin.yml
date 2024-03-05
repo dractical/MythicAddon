@@ -11,6 +11,7 @@ depend:
   - ProtocolLib
 softdepend:
   - PlotSquared
+  - MythicLib
 permissions:
   mythicaddon.reload:
     description: Allows the user to reload the MythicAddon configuration
