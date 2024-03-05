@@ -15,3 +15,7 @@ A discord server dedicated to making learning MythicMobs and its other plugins f
 
 ## Getting the full version
 - Buy this plugin from the MythicMobs academy for cookies! Includes free support and lifetime updates.
+
+# Contributors
+
+## [AugmaTV](https://github.com/AugmaTV): Added StatSkill mechanic
