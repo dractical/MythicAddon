@@ -1,12 +1,11 @@
 package org.aidan.mythicaddon;
 
-import io.lumine.mythic.api.skills.SkillResult;
 import io.lumine.mythic.bukkit.events.MythicConditionLoadEvent;
 import io.lumine.mythic.bukkit.events.MythicMechanicLoadEvent;
 import org.aidan.mythicaddon.conditions.HealthPercentCondition;
 import org.aidan.mythicaddon.mechanics.CooldownBar.CooldownBarMechanic;
 import org.aidan.mythicaddon.mechanics.DropItemSlot.DropItemSlotMechanic;
-import org.aidan.mythicaddon.mechanics.Stat.StatSkill;
+import org.aidan.mythicaddon.mechanics.Stat.StatSkillMechanic;
 import org.aidan.mythicaddon.mechanics.TimeStop.TimeStopAbility;
 import org.aidan.mythicaddon.mechanics.TimeStop.TimeStopSkill;
 import org.bukkit.Bukkit;
@@ -67,11 +66,7 @@ public class MythicAddon extends JavaPlugin implements Listener {
             event.register(new DropItemSlotMechanic(this, event.getConfig())); // Registers DropItemSlotMechanic
             log.info("-- Registered dropitemslot mechanic!"); // Logs mechanic registration
         } else if (event.getMechanicName().equalsIgnoreCase("statskill")) {
-            if (this.getServer().getPluginManager().getPlugin("MythicLib") == null) {
-                System.out.println("To use the StatSkill you need to have MythicLib installed.");
-                return;
-            }
-            event.register(new StatSkill(this, event.getConfig())); // Registers StatSkill
+            event.register(new StatSkillMechanic(this, event.getConfig())); // Registers StatSkill
             log.info("-- Registered statskill mechanic!"); // Logs mechanic registration
         }
     }
