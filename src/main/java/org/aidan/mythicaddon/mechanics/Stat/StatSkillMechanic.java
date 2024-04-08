@@ -5,11 +5,15 @@ import io.lumine.mythic.api.config.MythicLineConfig;
 import io.lumine.mythic.api.skills.ITargetedEntitySkill;
 import io.lumine.mythic.api.skills.SkillMetadata;
 import io.lumine.mythic.api.skills.SkillResult;
+import io.lumine.mythic.api.skills.placeholders.PlaceholderDouble;
+import io.lumine.mythic.api.skills.placeholders.PlaceholderInt;
 import io.lumine.mythic.bukkit.MythicBukkit;
 import io.lumine.mythic.bukkit.utils.Schedulers;
 import io.lumine.mythic.core.skills.stats.StatModifierType;
 import io.lumine.mythic.core.skills.stats.StatRegistry;
 import io.lumine.mythic.core.skills.stats.StatType;
+import io.lumine.mythic.core.utils.annotations.MythicField;
+import io.lumine.mythic.core.utils.annotations.MythicMechanic;
 import io.lumine.mythic.lib.api.player.EquipmentSlot;
 import io.lumine.mythic.lib.api.player.MMOPlayerData;
 import io.lumine.mythic.lib.api.stat.modifier.TemporaryStatModifier;
@@ -20,15 +24,32 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Optional;
 import java.util.UUID;
 
+@MythicMechanic(
+        author = "AugmaTV",
+        name = "statskill",
+        description = "Provide a way to buff or debuf a mob/player"
+)
 public class StatSkillMechanic implements ITargetedEntitySkill {
     private final JavaPlugin plugin;
     private final String statsType;
     private final PluginType pluginType;
     // FLAT OR RELATIVE
     private final CalculModifier modifierType;
-    private final double value;
-    // Duration time in ticks
-    private final long duration;
+    @MythicField(
+            name = "value",
+            aliases = {"v"},
+            description = "The value of the modifier",
+            defValue = "1"
+    )
+    private final PlaceholderDouble value;
+
+    @MythicField(
+            name = "duration",
+            aliases = {"d"},
+            description = "The duration of the mechanic in ticks",
+            defValue = "100"
+    )
+    private final PlaceholderInt duration;
 
     public StatSkillMechanic(JavaPlugin plugin, MythicLineConfig config) {
         this.plugin = plugin;
@@ -59,9 +80,8 @@ public class StatSkillMechanic implements ITargetedEntitySkill {
             modifierTypeCheck = CalculModifier.FLAT;
         }
         this.modifierType = modifierTypeCheck;
-
-        this.value = config.getDouble("value", 1.0d);
-        this.duration = config.getLong(new String[] { "duration" }, 100l);
+        this.value = config.getPlaceholderDouble(new String[] {"value", "v"}, 1.0d, new String[0]);
+        this.duration = config.getPlaceholderInteger(new String[] {"duration", "d"}, 100, new String[0]);
     }
 
     @Override
@@ -98,8 +118,8 @@ public class StatSkillMechanic implements ITargetedEntitySkill {
             statModifierType = ModifierType.FLAT;
         }
 
-        TemporaryStatModifier statModifier = new TemporaryStatModifier(keyStats, this.statsType, this.value, statModifierType, EquipmentSlot.OTHER, ModifierSource.OTHER);
-        statModifier.register(targetMMOPlayerData, this.duration);
+        TemporaryStatModifier statModifier = new TemporaryStatModifier(keyStats, this.statsType, this.value.get(skillMetadata, abstractEntity), statModifierType, EquipmentSlot.OTHER, ModifierSource.OTHER);
+        statModifier.register(targetMMOPlayerData, this.duration.get(skillMetadata, abstractEntity));
         return SkillResult.SUCCESS;
     }
 
@@ -130,10 +150,10 @@ public class StatSkillMechanic implements ITargetedEntitySkill {
             statModifierType = StatModifierType.ADDITIVE;
         }
 
-        statMap.put(statSource, statModifierType, this.value);
+        statMap.put(statSource, statModifierType, this.value.get(skillMetadata, abstractEntity));
 
-        if (this.duration > 0l) {
-            Schedulers.sync().runLater(() -> statMap.remove(statSource), this.duration);
+        if (this.duration.get(skillMetadata, abstractEntity) > 0l) {
+            Schedulers.sync().runLater(() -> statMap.remove(statSource), this.duration.get(skillMetadata, abstractEntity));
         }
         return SkillResult.SUCCESS;
     }
